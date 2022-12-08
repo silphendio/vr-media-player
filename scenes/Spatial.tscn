@@ -43,9 +43,6 @@ expand = false
 
 [node name="FPController" parent="." instance=ExtResource( 1 )]
 
-[node name="ARVRCamera" parent="FPController" index="1"]
-far = 1000.0
-
 [node name="LeftHandController" parent="FPController" index="2"]
 visible = true
 

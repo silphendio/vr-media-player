@@ -16,12 +16,15 @@ _global_script_class_icons={
 
 config/name="vr-media-player"
 run/main_scene="res://scenes/Spatial.tscn"
+run/delta_sync_after_draw=true
 config/icon="res://thirdparty/tabler-icons/badge-vr.svg"
 
 [display]
 
 window/size/width=1280
 window/size/height=720
+window/vsync/use_vsync=false
+window/vsync/vsync_via_compositor=true
 
 [gdnative]
 
