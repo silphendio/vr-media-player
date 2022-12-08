@@ -15,7 +15,7 @@ VR modes are flat screen (with zoom) , VR180, and VR360 (equirectangular or equi
 Built with version 3.5. Later versions of the 3.x branch might work too.
 
 ### godot-openxr
-Download it from [](https://github.com/GodotVR/godot_openxr/releases/download/1.3.0/godot-openxr.zip) (or any later release)
+Download it from [here](https://github.com/GodotVR/godot_openxr/releases/download/1.3.0/godot-openxr.zip)
 and place the `addons` folder into the project folder.
 
 ### godot-videodecoder (optional)
