@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/half_sphere.obj-8d5d6a0f120e8a395b8363fa773d3097.mesh"
+
+[deps]
+
+files=[ "res://.import/half_sphere.obj-8d5d6a0f120e8a395b8363fa773d3097.mesh" ]
+
+source_file="res://material/half_sphere.obj"
+dest_files=[ "res://.import/half_sphere.obj-8d5d6a0f120e8a395b8363fa773d3097.mesh", "res://.import/half_sphere.obj-8d5d6a0f120e8a395b8363fa773d3097.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

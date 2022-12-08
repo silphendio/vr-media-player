@@ -1,0 +1,39 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+render_mode unshaded;
+
+// uniform sampler2D stereo_img : hint_albedo; // this doesn't work for videos
+
+uniform sampler2D stereo_img;
+uniform sampler2D stereo_img2;
+uniform int cross_eyes;
+
+float f(float x){return pow(x,2.2);}
+vec3 cc(vec3 c){return vec3(f(c.r), f(c.g), f(c.b));}
+
+
+void fragment() {
+
+	vec2 uv = UV;
+	float v = PROJECTION_MATRIX[2][0];
+
+	vec4 tex;
+
+	if(bool(int(v >= 0.0) ^ cross_eyes)){
+		tex = texture(stereo_img, uv);
+	}
+	else{
+		tex = texture(stereo_img2, uv);
+	}
+
+
+    ALBEDO = cc(tex.rgb);
+}
+"
+
+[resource]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/cross_eyes = null
