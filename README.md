@@ -29,7 +29,8 @@ To build it this way, a compiler and ffmpeg development libraries need to be ins
 sudo apt install build-essential libavcodec-dev libswresample-dev libavformat-dev libavutil-dev libswscale-dev
 ```
 
-and then run `build-godot-videodecoder.sh`.
+and then run 
+```./build-godot-videodecoder.sh```.
 
 To use the plugin, make sure ffmpeg is installed. (`sudo apt install ffmpeg` for Ubuntu)
 
