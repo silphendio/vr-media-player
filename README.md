@@ -1,4 +1,4 @@
-# VR Media Viewer
+# VR Media Player
 
 This is a simple video player / image viewer for virtual reality bult with [Godot](https://godotengine.org/).
 
