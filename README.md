@@ -30,7 +30,9 @@ sudo apt install build-essential libavcodec-dev libswresample-dev libavformat-de
 ```
 
 and then run 
-```./build-godot-videodecoder.sh```.
+```
+./build-godot-videodecoder.sh
+```
 
 To use the plugin, make sure ffmpeg is installed. (`sudo apt install ffmpeg` for Ubuntu)
 
