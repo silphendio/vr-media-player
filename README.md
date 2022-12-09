@@ -22,7 +22,7 @@ or
 
 Then run ```./build.sh```.
 
-To run the application, run the `./Godot_v3.5.1-stable_x11.64` or use the generated `vr-media-player.desktop` file.
+To start the media player, run `./Godot_v3.5.1-stable_x11.64` or use the generated `vr-media-player.desktop` file.
 
 ### Manual build:
 The project uses Godot 3.5. Make sure to get a compatble version. You can download a standalone binary on the [Godot Website](https://godotengine.org/download)
