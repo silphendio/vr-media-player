@@ -6,9 +6,9 @@
 # visible from the inside (TODO: make this a command line argument)
 
 import sys
-from math import sqrt
+from math import sqrt, pi, asin
 
-lod = 32
+lod = 48
 
 if len(sys.argv) > 1:
     try:
@@ -38,8 +38,8 @@ x = -1
 for i in range(lodp*lodp):
     u = (i // lodp) / lod
     v = (i % lodp) / lod
-    z = u * 2 - 1
-    y = v * 2 - 1
+    z = asin((u-0.5) * sqrt(2)) * 4/pi
+    y = asin((v-0.5) * sqrt(2)) * 4/pi
 
     vertices.append(norm(x,y,z))
     normals.append(norm(-x,-y,-z))
@@ -58,8 +58,8 @@ z = -1
 for i in range(lodp*lodp):
     u = (i // lodp) / lod
     v = (i % lodp) / lod
-    x = u * 2 - 1
-    y = v * 2 - 1
+    x = asin((u-0.5) * sqrt(2)) * 4/pi
+    y = asin((v-0.5) * sqrt(2)) * 4/pi
 
     vertices.append(norm(x,y,z))
     normals.append(norm(-x,-y,-z))
@@ -78,8 +78,8 @@ x = 1
 for i in range(lodp*lodp):
     u = (i // lodp) / lod
     v = (i % lodp) / lod
-    z = u * 2 - 1
-    y = v * 2 - 1
+    z = asin((u-0.5) * sqrt(2)) * 4/pi
+    y = asin((v-0.5) * sqrt(2)) * 4/pi
 
     vertices.append(norm(x,y,z))
     normals.append(norm(-x,-y,-z))
@@ -99,8 +99,8 @@ y = -1
 for i in range(lodp*lodp):
     u = (i // lodp) / lod
     v = (i % lodp) / lod
-    x = u * 2 - 1
-    z = v * 2 - 1
+    x = asin((u-0.5) * sqrt(2)) * 4/pi
+    z = asin((v-0.5) * sqrt(2)) * 4/pi
 
     vertices.append(norm(x,y,z))
     normals.append(norm(-x,-y,-z))
@@ -119,8 +119,8 @@ z = 1
 for i in range(lodp*lodp):
     u = (i // lodp) / lod
     v = (i % lodp) / lod
-    x = u * 2 - 1
-    y = v * 2 - 1
+    x = asin((u-0.5) * sqrt(2)) * 4/pi
+    y = asin((v-0.5) * sqrt(2)) * 4/pi
 
     vertices.append(norm(x,y,z))
     normals.append(norm(-x,-y,-z))
@@ -140,8 +140,8 @@ y = 1
 for i in range(lodp*lodp):
     u = (i // lodp) / lod
     v = (i % lodp) / lod
-    x = u * 2 - 1
-    z = v * 2 - 1
+    x = asin((u-0.5) * sqrt(2)) * 4/pi
+    z = asin((v-0.5) * sqrt(2)) * 4/pi
 
     vertices.append(norm(x,y,z))
     normals.append(norm(-x,-y,-z))
