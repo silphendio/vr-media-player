@@ -9,42 +9,29 @@ Supports most Video-Formats, and images as png, bmp, tga, webp, jpg, or mpo. Gif
 VR modes are flat screen (with zoom) , VR180, and VR360 (equirectangular or equi-angular cubemap).
 
 
-## Dependencies:
+## Running the Application:
 
-### Godot
-Built with version 3.5. Later versions of the 3.x branch might work too.
+### Linux:
+First, make sure the following packages are installed:
 
-### godot-openxr
-Download it from [here](https://github.com/GodotVR/godot_openxr/releases/download/1.3.0/godot-openxr.zip)
-and place the `addons` folder into the project folder.
+`gcc ffmpeg wget unzip` (Arch Linux)
 
-### godot-videodecoder (optional)
-Godot natively only supports webm and ogv and no frame-seeking.
-To play other formats, this project uses [godot-videodecoder](https://github.com/jamie-pate/godot-videodecoder).
+or 
 
-Because compilation is difficult, the source code and a costum build script is included here (Linux only).
-To build it this way, a compiler and ffmpeg development libraries need to be installed. For Ubuntu run
+`build-essential ffmpeg libavcodec-dev libswresample-dev libavformat-dev libavutil-dev libswscale-dev wget unzip` (Ubuntu)
 
-```
-sudo apt install build-essential libavcodec-dev libswresample-dev libavformat-dev libavutil-dev libswscale-dev
-```
+Then run ```./build.sh```.
 
-and then run 
-```
-./build-godot-videodecoder.sh
-```
+To run the application, run the `./Godot_v3.5.1-stable_x11.64` or use the generated `vr-media-player.desktop` file.
 
-To use the plugin, make sure ffmpeg is installed. (`sudo apt install ffmpeg` for Ubuntu)
+### Manual build:
+The project uses Godot 3.5. Make sure to get a compatble version. You can download a standalone binary on the [Godot Website](https://godotengine.org/download)
 
---
-## Running:
-Open the project with Godot and click "run", or use the export function to generate a binary, like so:
+Next, get the [Godot OpenXR plugin](https://github.com/GodotVR/godot_openxr), and add it to the project.
 
-```
-mkdir bin
-Godot_v3.5-stable_x11.64 --export "Linux/X11" bin/vr-media-player
-```
+To watch videos, [godot-videodecoder](https://github.com/jamie-pate/godot-videodecoder) is used. This project includes the source code for the plugin and a simple build script for linux. Get the prerequisites listed above and run `./build.sh`. For other platforms, follow the instructions provided by the linked page.
 
+To run the application, start Godot, import the project and click `run`. To reate a standalone executable, follow this [Exporting projects](https://docs.godotengine.org/en/3.5/tutorials/export/exporting_projects.html) Tutorial. 
 
 
 ## Controls:
