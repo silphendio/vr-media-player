@@ -29,7 +29,7 @@ The project uses Godot 3.5. Make sure to get a compatble version. You can downlo
 
 Next, get the [Godot OpenXR plugin](https://github.com/GodotVR/godot_openxr), and add it to the project.
 
-To watch videos, [godot-videodecoder](https://github.com/jamie-pate/godot-videodecoder) is used. This project includes the source code for the plugin and a simple build script for linux. Get the prerequisites listed above and run `./build.sh`. For other platforms, follow the instructions provided by the linked page.
+To watch videos, [godot-videodecoder](https://github.com/kidrigger/godot-videodecoder) is used. This project includes the source code for the plugin and a simple build script for linux. Get the prerequisites listed above and run `./build.sh`. For other platforms, follow the build instructions provided by the linked page, or grab the [binary distribution](https://github.com/kidrigger/godot-videodecoder/tags) and extract the contents of the `target` folder to `./addons/bin`. Mind that that distribution supports VP9 decoding only (webm, ogv), for patent reasons.
 
 To run the application, start Godot, import the project and click `run`. To reate a standalone executable, follow this [Exporting projects](https://docs.godotengine.org/en/3.5/tutorials/export/exporting_projects.html) Tutorial. 
 
