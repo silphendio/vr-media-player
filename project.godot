@@ -16,16 +16,17 @@ _global_script_class_icons={
 
 config/name="vr-media-player"
 run/main_scene="res://scenes/Spatial.tscn"
-run/frame_delay_msec=1
-run/delta_sync_after_draw=true
 config/icon="res://thirdparty/tabler-icons/badge-vr.svg"
+
+[debug]
+
+settings/fps/force_fps=360
 
 [display]
 
 window/size/width=1280
 window/size/height=720
 window/vsync/use_vsync=false
-window/vsync/vsync_via_compositor=true
 
 [gdnative]
 
@@ -37,6 +38,7 @@ common/drop_mouse_on_gui_input_disabled=true
 
 [physics]
 
+common/physics_fps=360
 common/enable_pause_aware_picking=true
 3d/active_soft_world=false
 3d/frame_delay_msec=1
