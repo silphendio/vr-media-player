@@ -256,6 +256,17 @@ func _load_video(video):
 func _set_video_position(p):
 	if abs(_player.stream_position - p) > 0.5:
 		_player.stream_position = p
+		
+		# seek next frame while paused (from godot-videodecoder.c)
+		if _player.paused:
+			_player.paused = false
+			# yes, it seems like 5 idle frames _is_ the magic number.
+			# VideoPlayer gets notified to do NOTIFICATION_INTERNAL_PROCESS on idle frames
+			# so this should always work?
+			for i in range(5):
+				yield(get_tree(), 'idle_frame')
+			_player.paused = true
+
 
 func _set_loop(_is_loop):
 	pass # not needed
@@ -477,9 +488,10 @@ func _load_prev_file():
 
 
 func _skip_forward():
-	_player.stream_position += 10
+	_set_video_position(_player.stream_position + 10)
+	
 func _skip_backward():
-	_player.stream_position -= 10
+	_set_video_position(_player.stream_position - 10)
 
 func _on_left_pressed():
 	if _view_mode == VIEW_MODE.VIDEO:
