@@ -6,7 +6,7 @@ When no VR device is detected, it still works in "desktop-mode"
 
 Supports most Video-Formats, and images as png, bmp, tga, webp, jpg, or mpo. Gifs are not supported.
 
-VR modes are flat screen (with zoom) , VR180, and VR360 (equirectangular or equi-angular cubemap).
+VR modes are flat screen (with zoom) , 180°, and 360° (equirectangular or equi-angular cubemap).
 
 
 ## Running the Application:
