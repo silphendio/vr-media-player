@@ -14,11 +14,11 @@ VR modes are flat screen (with zoom) , 180°, and 360° (equirectangular or equi
 ### Linux:
 First, make sure the following packages are installed:
 
-`gcc ffmpeg wget unzip` (Arch Linux)
+`gcc wget unzip ffmpeg openxr` (Arch Linux)
 
 or 
 
-`build-essential ffmpeg libavcodec-dev libswresample-dev libavformat-dev libavutil-dev libswscale-dev wget unzip` (Ubuntu)
+`build-essential wget unzip ffmpeg libavcodec-dev libswresample-dev libavformat-dev libavutil-dev libswscale-dev libopenxr-loader1` (Ubuntu)
 
 Then run ```./build.sh```.
 
