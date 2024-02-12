@@ -46,10 +46,10 @@ func update_progress_bar(pos: float, duration: float):
 		value = int(progress_slider.max_value * pos / duration)
 	if progress_slider.value != value:
 		progress_slider.set_value_no_signal(value)
-		progress_label.text = _sec_to_str(pos) + " / " + _sec_to_str(duration)
+		progress_label.text = _sec_to_str(int(pos)) + " / " + _sec_to_str(int(duration))
 
 func set_volume(volume_db: float):
-	video_node.volume_db = volume_db
+	video_node.volume_db = int(volume_db)
 	if volume_db > -12:
 		volume_button.icon = volume_icon
 	else:
@@ -64,11 +64,13 @@ func set_muted(muted: bool = true):
 		if volume_button.icon != volume_icon_muted:
 			volume_button.icon = volume_icon_muted
 	else:
-		set_volume(volume_control.value)
+		set_volume(video_node.volume_db)
 
 func _sec_to_str(seconds: int):
 	var text = ""
+	@warning_ignore("integer_division")
 	var hours = int(seconds/3600)
+	@warning_ignore("integer_division")
 	var minutes = int(seconds/60) % 60
 	if hours > 0:
 		text += "%d:" % hours
@@ -79,27 +81,14 @@ func _sec_to_str(seconds: int):
 	return text
 
 
-func _ready():
-	# update video position
-	if video_node && video_node.player:
-		update_progress_bar(video_node.player.stream_position, video_node.video_duration)
-	
-	video_node.playback_state_changed.connect(set_playstate)
-	
-	update_ui()
-	
-
-
 func update_ui():
-	#print("** UI UPDATE **")
 	if(video_node.player):
 		update_progress_bar(video_node.player.stream_position, video_node.player.get_stream_length())
-	
 		set_muted(video_node.is_muted())
 		if !video_node.is_muted():
 			set_volume(video_node.volume_db)
 
-func _process(delta):
+func _process(_delta):
 	update_ui()
 
 func _on_LoadButton_pressed():

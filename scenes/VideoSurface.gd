@@ -41,7 +41,7 @@ var _volume_db: float = 0.0
 var volume_db: float:
 	set(val):
 		_volume_db = val
-		if player:
+		if player && !is_muted():
 			player.volume_db = val
 	get:
 		return _volume_db
@@ -197,6 +197,7 @@ func _load_video(video):
 	
 # p in percent
 func set_video_position(p):
+	p = max(p, 0)
 	print("try to set video position: %f -> %f" % [player.stream_position, p])
 	if abs(player.stream_position - p) > 1.0:
 		print("actually setting stream position...")
@@ -337,6 +338,6 @@ func is_muted():
 	return player && player.volume == 0
 
 func raise_volume():
-	player.volume_db += 5
+	volume_db += 5
 func lower_volume():
-	player.volume_db -= 5
+	volume_db -= 5

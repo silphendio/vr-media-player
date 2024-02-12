@@ -1,10 +1,21 @@
-[gd_scene load_steps=14 format=3 uid="uid://cq0jj0cgljp5y"]
+[gd_scene load_steps=15 format=3 uid="uid://cq0jj0cgljp5y"]
 
 [ext_resource type="Script" path="res://scenes/root.gd" id="1_1csjd"]
+[ext_resource type="Texture2D" uid="uid://b1ofh857rqth5" path="res://assets/backgrounds/red_black.png" id="2_j25w1"]
 [ext_resource type="PackedScene" uid="uid://bg0680jibr4jv" path="res://scenes/menu_view.tscn" id="2_oj2tx"]
 [ext_resource type="PackedScene" uid="uid://dpu8nu6q74ly7" path="res://scenes/Menu.tscn" id="3_p7lxn"]
 [ext_resource type="Script" path="res://scenes/VideoSurface.gd" id="3_vy3jm"]
-[ext_resource type="Texture2D" uid="uid://bv5o3bxcnwx3q" path="res://assets/backgrounds/purple_nebula_complex.png" id="5_prpin"]
+[ext_resource type="Script" path="res://scenes/volume_indicator_3d.gd" id="6_fsqrp"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7xrn8"]
+panorama = ExtResource("2_j25w1")
+
+[sub_resource type="Sky" id="Sky_cecpv"]
+sky_material = SubResource("PanoramaSkyMaterial_7xrn8")
+
+[sub_resource type="Environment" id="Environment_utknq"]
+background_mode = 2
+sky = SubResource("Sky_cecpv")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgvaq"]
 shading_mode = 0
@@ -31,18 +42,11 @@ albedo_texture = SubResource("ViewportTexture_fvnvm")
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_beyxi")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7xrn8"]
-panorama = ExtResource("5_prpin")
-
-[sub_resource type="Sky" id="Sky_cecpv"]
-sky_material = SubResource("PanoramaSkyMaterial_7xrn8")
-
-[sub_resource type="Environment" id="Environment_utknq"]
-background_mode = 2
-sky = SubResource("Sky_cecpv")
-
 [node name="root" type="Node3D"]
 script = ExtResource("1_1csjd")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_utknq")
 
 [node name="FlatView" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
@@ -74,8 +78,12 @@ disable_3d = true
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_utknq")
+[node name="VolumeIndicator3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+visible = false
+pixel_size = 0.001
+text = "0 dB"
+script = ExtResource("6_fsqrp")
 
 [connection signal="finished" from="VideoNode/VideoViewport/VideoPlayer" to="VideoNode" method="_on_video_player_finished"]
 

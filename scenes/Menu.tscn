@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dpu8nu6q74ly7"]
+[gd_scene load_steps=14 format=3 uid="uid://dpu8nu6q74ly7"]
 
 [ext_resource type="Script" path="res://scenes/menu.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://b3ipvwnyq0u3u" path="res://thirdparty/material-symbols/volume_up_white_24dp.svg" id="2_53cpx"]
@@ -9,20 +9,28 @@
 [ext_resource type="Texture2D" uid="uid://w4kif1jg7pai" path="res://thirdparty/material-symbols/skip_next_white_24dp.svg" id="6_himey"]
 [ext_resource type="Texture2D" uid="uid://2u530mgol604" path="res://thirdparty/material-symbols/zoom_in_white_24dp.svg" id="7_vlwp1"]
 [ext_resource type="Texture2D" uid="uid://cxf7q3spympe6" path="res://thirdparty/material-symbols/zoom_out_white_24dp.svg" id="8_mcqtf"]
+[ext_resource type="Texture2D" uid="uid://crbjuycrseg55" path="res://thirdparty/material-symbols/unfold_more_FILL0_wght200_GRAD0_opsz24.svg" id="10_de6no"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_ibq7x"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_s4ghw"]
 
+[sub_resource type="Theme" id="Theme_sllqa"]
+SpinBox/icons/updown = ExtResource("10_de6no")
+
 [node name="Menu" type="Control"]
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = -384.0
+offset_right = -384.0
+offset_bottom = -384.0
+grow_horizontal = 0
+grow_vertical = 0
 script = ExtResource("1")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -122,6 +130,10 @@ text = "Loop"
 [node name="LoopCheckButton" type="CheckButton" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
@@ -149,8 +161,8 @@ icon = ExtResource("5_2hvm6")
 layout_mode = 2
 icon = ExtResource("6_himey")
 
-[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(5, 0)
+[node name="VSeparator2" type="Control" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 
 [node name="ZoomInButton" type="Button" parent="VBoxContainer/HBoxContainer"]
@@ -178,6 +190,10 @@ text = "Time: "
 layout_mode = 2
 text = "0/ 0"
 
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
 [node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
@@ -194,13 +210,18 @@ size_flags_vertical = 0
 icon = ExtResource("2_53cpx")
 
 [node name="VolumeSlider" type="SpinBox" parent="VBoxContainer/HBoxContainer3"]
-custom_minimum_size = Vector2(150, 32)
+custom_minimum_size = Vector2(150, 24)
 layout_mode = 2
+theme = SubResource("Theme_sllqa")
 min_value = -999.0
 max_value = 99.0
 alignment = 1
 suffix = "dB"
 custom_arrow_step = 3.0
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2

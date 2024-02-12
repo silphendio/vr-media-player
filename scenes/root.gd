@@ -54,9 +54,12 @@ var vr_right_trigger = Switch.new()
 var vr_scroll_up = ScrollSwitch.new()
 var vr_scroll_down = ScrollSwitch.new()
 
-var vr_pause_button = Switch.new()
+var vr_push_left = Switch.new()
+var vr_push_right = Switch.new()
 
-var test_switch = Switch.new()
+
+@onready var volume_indicator = $VolumeIndicator3D
+
 
 
 func show_menu():
@@ -120,6 +123,9 @@ func _ready():
 		# TODO: implement pointer switching
 		menu_hand = vr_stuff.right_hand
 		menu_hand.add_child(menu_pointer)
+		
+		vr_stuff.right_hand.button_pressed.connect(_on_left_btn_pressed)
+		vr_stuff.left_hand.button_pressed.connect(_on_right_btn_pressed)
 	else:
 		print("no OpenXR found: proceeding with flatscreen mode")
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
@@ -128,7 +134,15 @@ func _ready():
 	show_menu()
 	print("root ready")
 
+func _on_left_btn_pressed(btn):
+	on_vr_button_pressed(vr_stuff.left_hand, btn)
+func _on_right_btn_pressed(btn):
+	on_vr_button_pressed(vr_stuff.right_hand, btn)
 
+func on_vr_button_pressed(hand, button):
+	if button == "by_button":
+		menu_hand = hand
+		toggle_menu()
 
 func show_menu_pointer(active = true):
 	print("show menu pointer: ", active)
@@ -139,25 +153,29 @@ func show_menu_pointer(active = true):
 	elif !active && menu_pointer in menu_hand.get_children():
 		menu_hand.remove_child(menu_pointer)
 
+func switch_hand(new_hand):
+	if menu_hand != new_hand && menu_pointer.is_inside_tree():
+		menu_hand.remove_child(menu_pointer)
+		new_hand.add_child(menu_pointer)
+	menu_hand = new_hand
+
 func _process(delta):
 	if vr_stuff:
 		var ts = 0.1
+		var left_joystick = vr_stuff.left_hand.get_vector2("primary")
+		var right_joystick = vr_stuff.right_hand.get_vector2("primary")
 
 		vr_left_trigger.update(vr_stuff.left_hand.get_float("trigger") > ts)
 		vr_right_trigger.update(vr_stuff.right_hand.get_float("trigger") > ts)
+		vr_menu_trigger.update(menu_hand.get_float("trigger") > ts)
+		vr_scroll_up.update(left_joystick.y > 0.5 || right_joystick.y > 0.5, delta)
+		vr_scroll_down.update(left_joystick.y < -0.5 || right_joystick.y < -0.5, delta)
 		
-		vr_pause_button.update(menu_hand.is_button_pressed("by_button"))		
+		vr_push_left.update(left_joystick.x < -0.5 || right_joystick.x < -0.5)
+		vr_push_right.update(left_joystick.x > 0.5 || right_joystick.x > 0.5)
 		
-		# menu button
-		if vr_pause_button.event == Switch.PRESSED:
-			toggle_menu()
-
 		# in-menu stuff:
 		if is_menu_open():
-			vr_menu_trigger.update(menu_hand.get_float("trigger") > ts)
-			vr_scroll_up.update(menu_hand.get_vector2("primary").y > 0.5, delta)
-			vr_scroll_down.update(menu_hand.get_vector2("primary").y < -0.5, delta)
-
 			if vr_menu_trigger.event != Switch.IDLE:
 				menu_view.press(vr_menu_trigger.state)
 				#keyboard_view.press(vr_menu_trigger.state)
@@ -167,16 +185,43 @@ func _process(delta):
 				menu_view.scroll_up()
 		
 			# maybe switch menu hand
-			if vr_left_trigger.event == Switch.PRESSED && menu_hand != vr_stuff.left_hand:
-				menu_hand.remove_child(menu_pointer)
-				menu_hand = vr_stuff.left_hand
-				menu_hand.add_child(menu_pointer)
-				print("switched menu hand to left")
-			if vr_right_trigger.event == Switch.PRESSED && menu_hand != vr_stuff.right_hand:
-				menu_hand.remove_child(menu_pointer)			
-				menu_hand = vr_stuff.right_hand
-				menu_hand.add_child(menu_pointer)
-				print("switched menu hand to right")
+			if vr_left_trigger.event == Switch.PRESSED:
+				switch_hand(vr_stuff.left_hand)
+			if vr_right_trigger.event == Switch.PRESSED:
+				switch_hand(vr_stuff.right_hand)
+		else:
+			# navigation
+
+			if vr_push_left.event == Switch.PRESSED:
+				video_node.press_left()
+			if vr_push_right.event == Switch.PRESSED:
+				video_node.press_right()
+			
+			# audio
+			# volume_indicator
+			if abs(left_joystick.y) > 0.1:
+				add_volume_db(left_joystick.y * 20 * delta, vr_stuff.left_hand)
+			if abs(right_joystick.y) > 0.1:
+				add_volume_db(right_joystick.y * 20 * delta, vr_stuff.right_hand)
+			
+			# pause
+			if (vr_left_trigger.event == Switch.PRESSED) || (vr_right_trigger.event == Switch.PRESSED):
+				video_node.toggle_pause()
+
+
+func add_volume_db(delta: float, indicator_parent = null):
+	video_node.volume_db += delta
+	if indicator_parent:
+		volume_indicator.volume_db = video_node.volume_db
+		volume_indicator.time_left = 100.0
+		if volume_indicator.is_inside_tree():
+			#volume_indicator.reparent(indicator_parent)
+			volume_indicator.get_parent().remove_child(volume_indicator)
+			#print("ind rep")
+		indicator_parent.add_child(volume_indicator)
+		#print("ind add")
+		volume_indicator.visible = true
+	print("new vol:", video_node.volume_db)
 
 
 func _unhandled_input(event):
@@ -227,4 +272,3 @@ func _unhandled_input(event):
 			video_node.lower_volume()
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			video_node.raise_volume()
-
