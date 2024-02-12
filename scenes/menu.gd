@@ -1,70 +1,41 @@
 extends Control
 
+@export var video_node: Node3D = null
 
 enum PROJECTION {
 	FLAT,
 	VR180,
-	VR360
-	VR360_EAC
+	VR360,
+	VR360_EAC,
 }
-var projection = PROJECTION.FLAT
-var is_stereo = false
-var is_loop = false
 
-signal video_loaded(file)
 
-signal is_stereo_changed(is_stereo)
-signal projection_changed(projection)
-signal is_loop_changed(is_loop)
+var _pause_icon = preload("res://thirdparty/material-symbols/pause_white_24dp.svg")
+var _play_icon = preload("res://thirdparty/material-symbols/play_arrow_white_24dp.svg")
 
-signal volume_changed(vol)
+var volume_icon = preload("res://thirdparty/material-symbols/volume_up_white_24dp.svg")
+var volume_icon_quiet = preload("res://thirdparty/material-symbols/volume_down_white_24dp.svg")
+var volume_icon_muted = preload("res://thirdparty/material-symbols/volume_off_white_24dp.svg")
 
-signal progress_changed(p)
-
-signal start_pressed
-signal recenter_pressed
-
-signal zoom_in_pressed
-signal zoom_out_pressed
-signal swap_eyes_changed(swap_eyes)
-
-signal prev_pressed
-signal next_pressed
-signal skip_forward_pressed
-signal skip_back_pressed
-
-var volume = 100 setget set_volume
-
-var is_playing setget set_is_playing
-
-var _pause_icon
-var _start_icon
-
-var volume_icon = preload("res://thirdparty/tabler-icons/volume.svg")
-var volume_icon2 = preload("res://thirdparty/tabler-icons/volume-2.svg")
-var volume_icon3 = preload("res://thirdparty/tabler-icons/volume-3.svg")
+@onready var volume_button = $VBoxContainer/HBoxContainer3/VolumeIcon
+@onready var start_button = $VBoxContainer/HBoxContainer/StartButton
+@onready var progress_slider = $VBoxContainer/ProgressSlider
+@onready var progress_label = $VBoxContainer/HBoxContainer2/ProgressLabel
+@onready var volume_control = $VBoxContainer/HBoxContainer3/VolumeSlider
 
 # for video progress
 var _duration = 0
 var _progress = 0
-onready var _progress_slider = $VBoxContainer/ProgressSlider
-var _is_progress_dragging = false
 
-func set_is_playing(p):
-	is_playing = p
-	if is_playing:
-		$VBoxContainer/HBoxContainer/StartButton.icon = _pause_icon
+enum PLAYBACK_STATE {STOPPED, PLAYING, PAUSED}
+func set_playstate(p):
+	if p == PLAYBACK_STATE.PLAYING:
+		start_button.icon = _pause_icon
 	else:
-		$VBoxContainer/HBoxContainer/StartButton.icon = _start_icon
+		start_button.icon = _play_icon
 
-func set_volume(vol):
-	volume = clamp(vol, 0, 100)
-	$VBoxContainer/HBoxContainer3/VolumeSlider.value = volume
 
-func set_progress(pos, duration):
-	if (_duration == duration and _progress == pos):
-		return
-
+func update_progress_bar(pos: float, duration: float):
 	_progress = pos
 	_duration = duration
 	var value
@@ -72,12 +43,30 @@ func set_progress(pos, duration):
 		value = 0
 		pos = 0
 	else:
-		value = int(_progress_slider.max_value * pos / duration)
-	if _progress_slider.value != value:
-		_progress_slider.value = value
-		$VBoxContainer/HBoxContainer2/ProgressLabel.text = _sec_to_str(pos) + " / " + _sec_to_str(duration)
+		value = int(progress_slider.max_value * pos / duration)
+	if progress_slider.value != value:
+		progress_slider.set_value_no_signal(value)
+		progress_label.text = _sec_to_str(pos) + " / " + _sec_to_str(duration)
 
-func _sec_to_str(seconds):
+func set_volume(volume_db: float):
+	video_node.volume_db = volume_db
+	if volume_db > -12:
+		volume_button.icon = volume_icon
+	else:
+		volume_button.icon = volume_icon_quiet
+	
+	if volume_control.value != volume_db:
+		volume_control.value = volume_db
+
+func set_muted(muted: bool = true):
+	video_node.set_mute(muted)
+	if video_node.is_muted():
+		if volume_button.icon != volume_icon_muted:
+			volume_button.icon = volume_icon_muted
+	else:
+		set_volume(volume_control.value)
+
+func _sec_to_str(seconds: int):
 	var text = ""
 	var hours = int(seconds/3600)
 	var minutes = int(seconds/60) % 60
@@ -88,91 +77,102 @@ func _sec_to_str(seconds):
 		text += "%d:" % minutes
 	text += "%02d:" % (int(seconds) % 60)
 	return text
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	var btn = $VBoxContainer/GridContainer/ProjectionOption
-	btn.add_item("Flat")
-	btn.add_item("180°")
-	btn.add_item("360°")
-	btn.add_item("360° EAC")
-	
-	$VBoxContainer/GridContainer/StereoOption.add_item("Mono")
-	$VBoxContainer/GridContainer/StereoOption.add_item("Stereo")
 
-	_start_icon = load("res://thirdparty/tabler-icons/player-play.svg")
-	_pause_icon = load("res://thirdparty/tabler-icons/player-pause.svg")
+
+func _ready():
+	# update video position
+	if video_node && video_node.player:
+		update_progress_bar(video_node.player.stream_position, video_node.video_duration)
+	
+	video_node.playback_state_changed.connect(set_playstate)
+	
+	update_ui()
+	
+
+
+func update_ui():
+	#print("** UI UPDATE **")
+	if(video_node.player):
+		update_progress_bar(video_node.player.stream_position, video_node.player.get_stream_length())
+	
+		set_muted(video_node.is_muted())
+		if !video_node.is_muted():
+			set_volume(video_node.volume_db)
+
+func _process(delta):
+	update_ui()
 
 func _on_LoadButton_pressed():
 	$FileDialog.popup()
 
-func _on_ProjectionOption_item_selected(index):
-	projection = index
-	emit_signal("projection_changed", index)
-
-func _on_StereoOption_item_selected(index):
-	is_stereo = bool(index)
-	emit_signal("is_stereo_changed", is_stereo)
 
 func _on_LoopCheckButton_toggled(button_pressed):
-	is_loop = button_pressed
-	emit_signal("is_loop_changed", is_loop)
+	video_node.is_loop = button_pressed
 
 func _on_VolumeSlider_value_changed(value):
-	volume = value
-	var icon = $VBoxContainer/HBoxContainer3/VolumeIcon
-	if value > 50:
-		icon.texture = volume_icon
-	elif value > 0:
-		icon.texture = volume_icon2
-	else:
-		icon.texture = volume_icon3
-	emit_signal("volume_changed", volume)
+	set_volume(value)
 
 func _on_ProgressSlider_value_changed(value):
-	var p = _duration * value / _progress_slider.max_value
-	emit_signal("progress_changed",  p)
+	var p = _duration * value / progress_slider.max_value
+	video_node.set_video_position(p)
 
 func _on_ExitDialog_confirmed():
+	print("QUIT")
 	get_tree().quit()
 
 func _on_ExitButton_pressed():
 	$ExitDialog.show()
 
 
-func _on_ProgressSlider_drag_started():
-	_is_progress_dragging = true
-
-func _on_ProgressSlider_drag_ended(_value_changed):
-	_is_progress_dragging = false
-
 # simple signal forwarding
 
 func _on_FileDialog_file_selected(path):
-	emit_signal("video_loaded", path)
+	video_node.load_media_file(path)
 
 func _on_StartButton_pressed():
-	emit_signal("start_pressed")
+	video_node.toggle_pause()
 
 func _on_PrevButton_pressed():
-	emit_signal("prev_pressed")
+	video_node.load_prev_file()
 
 func _on_SkipBackButton_pressed():
-	emit_signal("skip_back_pressed")
+	video_node.skip_backward()
 
 func _on_Skip_forwardButton_pressed():
-	emit_signal("skip_forward_pressed")
+	video_node.skip_forward()
 
 func _on_NextButton_pressed():
-	emit_signal("next_pressed")
+	video_node.load_next_file()
 
 func _on_RecenterButton_pressed():
-	emit_signal("recenter_pressed")
+	video_node.recenter_view()
 
 func _on_ZoomOutButton_pressed():
-	emit_signal("zoom_out_pressed")
+	video_node.zoom_out()
 
 func _on_ZoomInButton_pressed():
-	emit_signal("zoom_in_pressed")
+	video_node.zoom_in()
 
 func _on_SwapEyesCheckButton_toggled(button_pressed):
-	emit_signal("swap_eyes_changed", button_pressed)
+	video_node.set_swap_eyes(button_pressed)
+
+
+func _on_projection_flat_pressed():
+	video_node.load_surface(PROJECTION.FLAT)
+func _on_projection_180_pressed():
+	video_node.load_surface(PROJECTION.VR180)
+func _on_projection_360_pressed():
+	video_node.load_surface(PROJECTION.VR360)
+func _on_projection_360eac_pressed():
+	video_node.load_surface(PROJECTION.VR360_EAC)
+
+
+func _on_mono_pressed():
+	video_node.set_stereo(false)
+func _on_stereo_pressed():
+	video_node.set_stereo(true)
+
+
+
+func _on_volume_icon_pressed():
+		set_muted(!video_node.is_muted())

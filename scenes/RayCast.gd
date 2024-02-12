@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 # I couldn't get an actual Raycast node to work
 # doesn't check if collision object is target area (there is only one Area)
 
@@ -17,7 +17,7 @@ var _is_wheel_up_pressed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	get_viewport().debug_draw = Viewport.DEBUG_DRAW_WIREFRAME
+	get_viewport().debug_draw = SubViewport.DEBUG_DRAW_WIREFRAME
 	pass
 
 
@@ -31,9 +31,9 @@ func _process(delta):
 	_last_click_time += delta
 	_last_scroll_time += delta
 
-	var from = global_translation
-	var to = from + global_transform.basis.xform(Vector3.FORWARD)*100
-	var result = get_world().direct_space_state.intersect_ray(from, to, [], 0x7fffffff,false,true)
+	var from = global_position
+	var to = from + global_transform.basis * (Vector3.FORWARD)*100
+	var result = get_world_3d().direct_space_state.intersect_ray(from, to, [], 0x7fffffff,false,true)
 	
 	# calculate 2d position
 	if result.size() > 0:
@@ -58,8 +58,8 @@ func _process(delta):
 			# send click event!
 			var event = InputEventMouseButton.new()
 			event.position = target.get_2d_position(result.position)
-			event.button_index = BUTTON_LEFT
-			event.pressed = triggered
+			event.button_index = MOUSE_BUTTON_LEFT
+			event.button_pressed = triggered
 			
 			# doubleclick
 			if triggered:
@@ -74,8 +74,8 @@ func _process(delta):
 		if wheel_up != _is_wheel_up_pressed or (wheel_up and _last_scroll_time > 0.1):
 			var event = InputEventMouseButton.new()
 			event.position = target.get_2d_position(result.position)
-			event.button_index = BUTTON_WHEEL_UP
-			event.pressed = wheel_up
+			event.button_index = MOUSE_BUTTON_WHEEL_UP
+			event.button_pressed = wheel_up
 			print("synthetic wheel up")
 			viewport.input(event)
 			_last_scroll_time = 0
@@ -84,8 +84,8 @@ func _process(delta):
 		if wheel_down != _is_wheel_down_pressed or (wheel_down and _last_scroll_time > 0.1):
 			var event = InputEventMouseButton.new()
 			event.position = target.get_2d_position(result.position)
-			event.button_index = BUTTON_WHEEL_DOWN
-			event.pressed = wheel_down
+			event.button_index = MOUSE_BUTTON_WHEEL_DOWN
+			event.button_pressed = wheel_down
 			print("synthetic wheel down")
 			viewport.input(event)
 			_last_scroll_time = 0

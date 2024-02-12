@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://bg0680jibr4jv"]
+
+[ext_resource type="Script" path="res://scenes/menu_view.gd" id="1_dqr3u"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_j0vly"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i4q5g"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_j0vly")
+
+[sub_resource type="QuadMesh" id="QuadMesh_g21sa"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_i4q5g")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bb675"]
+size = Vector3(1, 1, 0.2)
+
+[node name="MenuView" type="MeshInstance3D"]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("QuadMesh_g21sa")
+script = ExtResource("1_dqr3u")
+resolution = Vector2i(768, 768)
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
+shape = SubResource("BoxShape3D_bb675")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+gui_embed_subwindows = true
+render_target_update_mode = 4

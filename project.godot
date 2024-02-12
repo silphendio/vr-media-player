@@ -6,17 +6,14 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[  ]
-_global_script_class_icons={
-}
+config_version=5
 
 [application]
 
 config/name="vr-media-player"
-run/main_scene="res://scenes/Spatial.tscn"
-config/icon="res://thirdparty/tabler-icons/badge-vr.svg"
+run/main_scene="res://scenes/root.tscn"
+config/features=PackedStringArray("4.2")
+config/icon="res://icon.png"
 
 [debug]
 
@@ -24,17 +21,29 @@ settings/fps/force_fps=360
 
 [display]
 
-window/size/width=1280
-window/size/height=720
-window/vsync/use_vsync=false
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/vsync/vsync_mode=false
+
+[dotnet]
+
+project/assembly_name="vr-media-player"
 
 [gdnative]
 
-singletons=[ "res://addons/godot-openxr/config/godot_openxr.gdnlib", "res://addons/videodecoder.gdnlib" ]
+singletons=["res://addons/godot-openxr/config/godot_openxr.gdnlib", "res://addons/videodecoder.gdnlib"]
 
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+
+[input]
+
+mouse_btn_left={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
 
 [physics]
 
@@ -45,4 +54,11 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/default_environment="res://default_env.tres"
+environment/defaults/default_environment="res://default_env.tres"
+
+[xr]
+
+openxr/enabled=true
+openxr/submit_depth_buffer=true
+openxr/startup_alert=false
+shaders/enabled=true

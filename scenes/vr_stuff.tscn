@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://cwlkl788qigs2"]
+
+[ext_resource type="Script" path="res://scenes/vr_stuff.gd" id="1_q2fi5"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ibjnt"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0b4fk"]
+noise = SubResource("FastNoiseLite_ibjnt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jq6mu"]
+resource_local_to_scene = true
+shading_mode = 0
+albedo_color = Color(0, 0.0941176, 1, 1)
+albedo_texture = SubResource("NoiseTexture2D_0b4fk")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_oem8w"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_jq6mu")
+top_radius = 0.005
+bottom_radius = 0.015
+height = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rwdy3"]
+noise = SubResource("FastNoiseLite_ibjnt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tjxg4"]
+shading_mode = 0
+albedo_color = Color(1, 0.0941176, 1, 1)
+albedo_texture = SubResource("NoiseTexture2D_rwdy3")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5ahx1"]
+material = SubResource("StandardMaterial3D_tjxg4")
+top_radius = 0.005
+bottom_radius = 0.015
+height = 0.2
+
+[node name="VRStuff" type="Node3D"]
+script = ExtResource("1_q2fi5")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="LeftHand" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.2, 0)
+tracker = &"left_hand"
+pose = &"aim"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftHand"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_oem8w")
+
+[node name="RightHand" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.2, 0)
+tracker = &"right_hand"
+pose = &"aim"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightHand"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_5ahx1")
+skeleton = NodePath("../../LeftHand")

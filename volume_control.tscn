@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://bhhhue4ojlhfd"]
+
+[ext_resource type="Script" path="res://volume_control.gd" id="1_1i8rg"]
+[ext_resource type="Texture2D" uid="uid://cixj464olsbw4" path="res://thirdparty/material-symbols/remove_FILL0_wght700_GRAD0_opsz24.svg" id="2_8yyhy"]
+[ext_resource type="Texture2D" uid="uid://y7foauljuhkl" path="res://thirdparty/material-symbols/remove_FILL0_wght200_GRAD0_opsz24.svg" id="3_7no5u"]
+[ext_resource type="Texture2D" uid="uid://ybhn0eykvp5l" path="res://thirdparty/material-symbols/add_FILL0_wght200_GRAD0_opsz24.svg" id="4_8wb5k"]
+[ext_resource type="Texture2D" uid="uid://bsuko3t0aul87" path="res://thirdparty/material-symbols/add_FILL0_wght700_GRAD0_opsz24.svg" id="5_efcf5"]
+
+[sub_resource type="Theme" id="Theme_obapl"]
+
+[node name="VolumeControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1i8rg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 27.0
+offset_bottom = 31.0
+
+[node name="ButtonLowerMuch" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("2_8yyhy")
+
+[node name="ButtonLower" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_obapl")
+icon = ExtResource("3_7no5u")
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(68, 0)
+layout_mode = 2
+text = "0 dB"
+horizontal_alignment = 1
+
+[node name="ButtonRaise" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("4_8wb5k")
+
+[node name="ButtonRaiseMuch" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("5_efcf5")
+
+[connection signal="pressed" from="HBoxContainer/ButtonLowerMuch" to="." method="_on_button_lower_much_pressed"]
+[connection signal="pressed" from="HBoxContainer/ButtonLower" to="." method="_on_button_lower_pressed"]
+[connection signal="pressed" from="HBoxContainer/ButtonRaise" to="." method="_on_button_raise_pressed"]
+[connection signal="pressed" from="HBoxContainer/ButtonRaiseMuch" to="." method="_on_button_raise_much_pressed"]

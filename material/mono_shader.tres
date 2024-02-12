@@ -1,0 +1,29 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dbvptqs7l2blv"]
+
+[sub_resource type="Shader" id="10"]
+code = "shader_type spatial;
+render_mode unshaded;
+
+// uniform sampler2D stereo_img : hint_albedo; // this doesn't work for videos
+
+uniform sampler2D img;
+
+float f(float x){return pow(x,2.2);}
+vec3 cc(vec3 c){return vec3(f(c.r), f(c.g), f(c.b));}
+
+
+void fragment() {
+
+	vec2 uv = UV;
+	float v = PROJECTION_MATRIX[2][0];
+
+	vec4 tex = texture(img, uv);
+
+    ALBEDO = cc(tex.rgb);
+}
+"
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("10")

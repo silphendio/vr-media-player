@@ -1,0 +1,82 @@
+[gd_scene load_steps=14 format=3 uid="uid://cq0jj0cgljp5y"]
+
+[ext_resource type="Script" path="res://scenes/root.gd" id="1_1csjd"]
+[ext_resource type="PackedScene" uid="uid://bg0680jibr4jv" path="res://scenes/menu_view.tscn" id="2_oj2tx"]
+[ext_resource type="PackedScene" uid="uid://dpu8nu6q74ly7" path="res://scenes/Menu.tscn" id="3_p7lxn"]
+[ext_resource type="Script" path="res://scenes/VideoSurface.gd" id="3_vy3jm"]
+[ext_resource type="Texture2D" uid="uid://bv5o3bxcnwx3q" path="res://assets/backgrounds/purple_nebula_complex.png" id="5_prpin"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgvaq"]
+shading_mode = 0
+albedo_color = Color(0.960784, 0.458824, 0.333333, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fgjdi"]
+material = SubResource("StandardMaterial3D_sgvaq")
+top_radius = 0.002
+bottom_radius = 0.002
+height = 16.0
+radial_segments = 16
+rings = 16
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_fvnvm"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_beyxi"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_fvnvm")
+
+[sub_resource type="QuadMesh" id="QuadMesh_1ioal"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_beyxi")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7xrn8"]
+panorama = ExtResource("5_prpin")
+
+[sub_resource type="Sky" id="Sky_cecpv"]
+sky_material = SubResource("PanoramaSkyMaterial_7xrn8")
+
+[sub_resource type="Environment" id="Environment_utknq"]
+background_mode = 2
+sky = SubResource("Sky_cecpv")
+
+[node name="root" type="Node3D"]
+script = ExtResource("1_1csjd")
+
+[node name="FlatView" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="FlatView"]
+target_position = Vector3(0, 0, -16)
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="RayMesh" type="MeshInstance3D" parent="FlatView/RayCast3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -8)
+mesh = SubResource("CylinderMesh_fgjdi")
+skeleton = NodePath("../..")
+
+[node name="MenuView" parent="." instance=ExtResource("2_oj2tx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("QuadMesh_1ioal")
+
+[node name="Menu" parent="MenuView/SubViewport" index="0" node_paths=PackedStringArray("video_node") instance=ExtResource("3_p7lxn")]
+video_node = NodePath("../../../VideoNode")
+
+[node name="VideoNode" type="Node3D" parent="."]
+script = ExtResource("3_vy3jm")
+
+[node name="VideoViewport" type="SubViewport" parent="VideoNode"]
+disable_3d = true
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="VideoNode/VideoViewport"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_utknq")
+
+[connection signal="finished" from="VideoNode/VideoViewport/VideoPlayer" to="VideoNode" method="_on_video_player_finished"]
+
+[editable path="MenuView"]

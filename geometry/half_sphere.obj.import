@@ -1,20 +1,22 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/half_sphere.obj-ea6b35e37f247bdb6ba79d86bc67c886.mesh"
+uid="uid://fi0h6wqlk6s3"
+path="res://.godot/imported/half_sphere.obj-ea6b35e37f247bdb6ba79d86bc67c886.mesh"
 
 [deps]
 
-files=[ "res://.import/half_sphere.obj-ea6b35e37f247bdb6ba79d86bc67c886.mesh" ]
+files=["res://.godot/imported/half_sphere.obj-ea6b35e37f247bdb6ba79d86bc67c886.mesh"]
 
 source_file="res://geometry/half_sphere.obj"
-dest_files=[ "res://.import/half_sphere.obj-ea6b35e37f247bdb6ba79d86bc67c886.mesh", "res://.import/half_sphere.obj-ea6b35e37f247bdb6ba79d86bc67c886.mesh" ]
+dest_files=["res://.godot/imported/half_sphere.obj-ea6b35e37f247bdb6ba79d86bc67c886.mesh", "res://.godot/imported/half_sphere.obj-ea6b35e37f247bdb6ba79d86bc67c886.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
-octahedral_compression=true
-optimize_mesh_flags=4286
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

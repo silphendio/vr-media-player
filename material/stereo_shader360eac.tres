@@ -1,6 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://yewc8p3fpjsg"]
 
-[sub_resource type="Shader" id=10]
+[sub_resource type="Shader" id="10"]
 resource_local_to_scene = true
 code = "shader_type spatial;
 render_mode unshaded;
@@ -32,5 +32,6 @@ void fragment() {
 
 [resource]
 resource_local_to_scene = true
-shader = SubResource( 10 )
-shader_param/cross_eyes = 0
+render_priority = 0
+shader = SubResource("10")
+shader_parameter/cross_eyes = 0
