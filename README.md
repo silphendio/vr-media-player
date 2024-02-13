@@ -1,5 +1,4 @@
 # VR Media Player
-
 This is a simple video player / image viewer for virtual reality bult with [Godot](https://godotengine.org/).
 
 When no VR device is detected, it still works in "desktop-mode"
@@ -8,31 +7,19 @@ Supports most Video-Formats, and images as png, bmp, tga, webp, jpg, or mpo. Gif
 
 VR modes are flat screen (with zoom) , 180°, and 360° (equirectangular or equi-angular cubemap).
 
+## Running from source:
 
-## Running the Application:
+- The project uses Godot 4.2. Make sure to get a compatble version. You can download a standalone binary on the [Godot Website](https://godotengine.org/download)
 
-### Linux:
-First, make sure the following packages are installed:
+- Next, get the [EIRTeam.FFmpeg](https://github.com/EIRTeam/EIRTeam.FFmpeg/releases) plugin, and unzip it into the project folder.
 
-`gcc wget unzip ffmpeg openxr` (Arch Linux)
+- To be able to watch videos with uncommon codecs, download an appropriate version of [FFmpeg builds](https://github.com/BtbN/FFmpeg-Builds/releases) and copy all `.dll` or `.so` files into the `addons/ffmpeg/linux64/` or `addons/ffmpeg/win64/` folder. Overwrite existing files.
 
-or 
+- To run the application, start Godot, import the project and click `run`.
 
-`build-essential wget unzip ffmpeg libavcodec-dev libswresample-dev libavformat-dev libavutil-dev libswscale-dev libopenxr-loader1` (Ubuntu)
+To reate a standalone executable, follow this [Exporting projects](https://docs.godotengine.org/en/stable/tutorials/export/exporting_projects.html) Tutorial. 
 
-Then run ```./build.sh```.
-
-To start the media player, run `./Godot_v3.5.1-stable_x11.64` or use the generated `vr-media-player.desktop` file.
-
-### Manual build:
-The project uses Godot 3.5. Make sure to get a compatble version. You can download a standalone binary on the [Godot Website](https://godotengine.org/download)
-
-Next, get the [Godot OpenXR plugin](https://github.com/GodotVR/godot_openxr), and add it to the project.
-
-To watch videos, [godot-videodecoder](https://github.com/kidrigger/godot-videodecoder) is used. This project includes the source code for the plugin and a simple build script for linux. Get the prerequisites listed above and run `./build.sh`. For other platforms, follow the build instructions provided by the linked page, or grab the [binary distribution](https://github.com/kidrigger/godot-videodecoder/tags) and extract the contents of the `target` folder to `./addons/bin`. Mind that that distribution supports VP9 decoding only (webm), for patent reasons.
-
-To run the application, start Godot, import the project and click `run`. To reate a standalone executable, follow this [Exporting projects](https://docs.godotengine.org/en/3.5/tutorials/export/exporting_projects.html) Tutorial. 
-
+Binary distribution coming soon...
 
 ## Controls:
 
