@@ -17,4 +17,4 @@ unzip -n Godot_v3.5.1-stable_x11.64.zip
 # build video-decoder
 ./build-godot-videodecoder.sh
 
-echo "[Desktop Entry]\nType=Application\nTerminal=false\nExec=$PWD/Godot_v3.5.1-stable_x11.64\nPath=$PWD\nName=VR Media Player\nIcon=$PWD/thirdparty/tabler-icons/badge-vr.svg" > vr-media-player.desktop
+printf "[Desktop Entry]\nType=Application\nTerminal=false\nExec=$PWD/Godot_v3.5.1-stable_x11.64\nPath=$PWD\nName=VR Media Player\nIcon=$PWD/thirdparty/tabler-icons/badge-vr.svg" > vr-media-player.desktop
