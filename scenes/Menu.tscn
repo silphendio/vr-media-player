@@ -252,6 +252,9 @@ filters = PackedStringArray("*.avi, *.flv, *.h264, *.m4v, *.mkv, *.mod, *.mov, *
 
 [node name="ExitDialog" type="ConfirmationDialog" parent="."]
 handle_input_locally = false
+mode = 3
+initial_position = 1
+size = Vector2i(252, 100)
 dialog_text = "Are you sure you want to quit?"
 
 [connection signal="pressed" from="VBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]

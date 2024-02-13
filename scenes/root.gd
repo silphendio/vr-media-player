@@ -227,20 +227,19 @@ func add_volume_db(delta: float, indicator_parent = null):
 func _unhandled_input(event):
 	# flat screen controls
 	
-	if event is InputEventKey:
+	if event is InputEventKey and event.pressed:
 		if event.key_label == KEY_ESCAPE:
-			print("esc pressed")
 			toggle_menu()
-		if event.pressed and event.keycode == KEY_SPACE:
+		if event.keycode == KEY_SPACE:
 			video_node.toggle_pause()
 
-		if event.pressed and event.keycode == KEY_LEFT:
+		if event.keycode == KEY_LEFT:
 			video_node.press_left()
-		if event.pressed and event.keycode == KEY_RIGHT:
+		if event.keycode == KEY_RIGHT:
 			video_node.press_right()
-		if event.pressed and event.keycode == KEY_UP:
+		if event.keycode == KEY_UP:
 			video_node.raise_volume()
-		if event.pressed and event.keycode == KEY_DOWN:
+		if event.keycode == KEY_DOWN:
 			video_node.lower_volume()
 
 	if vr_stuff:
