@@ -5,7 +5,9 @@ When no VR device is detected, it still works in "desktop-mode"
 
 Supports most Video-Formats, and images as png, bmp, tga, webp, jpg, or mpo. Gifs are not supported.
 
-VR modes are flat screen (with zoom) , 180°, and 360° (equirectangular or equi-angular cubemap).
+VR modes are flat screen, 180°, and 360° (equirectangular or equi-angular cubemap).
+3D Videos/Images are supported in side-by-side format bzw top&bottom for 360° videos.
+3D mpo images work too. 
 
 ## Running from source:
 
@@ -20,6 +22,9 @@ VR modes are flat screen (with zoom) , 180°, and 360° (equirectangular or equi
 To reate a standalone executable, follow this [Exporting projects](https://docs.godotengine.org/en/stable/tutorials/export/exporting_projects.html) Tutorial. 
 
 Binary distribution coming soon...
+
+## Screenshot
+![Screenshot](screenshot.png)
 
 ## Controls:
 
