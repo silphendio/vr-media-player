@@ -44,6 +44,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 
 [node name="LeftHand" type="XRController3D" parent="XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.2, 0)
+visible = false
 tracker = &"left_hand"
 pose = &"aim"
 
@@ -53,6 +54,7 @@ mesh = SubResource("CylinderMesh_oem8w")
 
 [node name="RightHand" type="XRController3D" parent="XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.2, 0)
+visible = false
 tracker = &"right_hand"
 pose = &"aim"
 
@@ -60,3 +62,6 @@ pose = &"aim"
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("CylinderMesh_5ahx1")
 skeleton = NodePath("../../LeftHand")
+
+[connection signal="tracking_changed" from="XROrigin3D/LeftHand" to="." method="_on_left_hand_tracking_changed"]
+[connection signal="tracking_changed" from="XROrigin3D/RightHand" to="." method="_on_right_hand_tracking_changed"]
