@@ -120,12 +120,12 @@ func _ready():
 		
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-		# TODO: implement pointer switching
+		# pointer switching
 		menu_hand = vr_stuff.right_hand
 		menu_hand.add_child(menu_pointer)
 		
-		vr_stuff.right_hand.button_pressed.connect(_on_left_btn_pressed)
-		vr_stuff.left_hand.button_pressed.connect(_on_right_btn_pressed)
+		vr_stuff.left_hand.button_pressed.connect(_on_left_btn_pressed)
+		vr_stuff.right_hand.button_pressed.connect(_on_right_btn_pressed)
 	else:
 		print("no OpenXR found: proceeding with flatscreen mode")
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
@@ -141,7 +141,7 @@ func _on_right_btn_pressed(btn):
 
 func on_vr_button_pressed(hand, button):
 	if button == "by_button":
-		menu_hand = hand
+		switch_hand(hand)
 		toggle_menu()
 
 func show_menu_pointer(active = true):
