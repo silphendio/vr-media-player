@@ -143,6 +143,14 @@ func on_vr_button_pressed(hand, button):
 	if button == "by_button":
 		switch_hand(hand)
 		toggle_menu()
+	
+	if button == "ax_button":
+		if is_menu_open():
+			# TODO: register down&up press separately
+			menu_view.press(true)
+			menu_view.press(false)
+		else:
+			video_node.toggle_pause()
 
 func show_menu_pointer(active = true):
 	print("show menu pointer: ", active)
