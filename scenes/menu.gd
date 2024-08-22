@@ -34,6 +34,8 @@ func set_playstate(p):
 	else:
 		start_button.icon = _play_icon
 
+func _ready():
+	video_node.playback_state_changed.connect(set_playstate)
 
 func update_progress_bar(pos: float, duration: float):
 	_progress = pos
