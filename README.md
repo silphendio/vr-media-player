@@ -9,7 +9,7 @@ VR modes are flat screen (with zoom) , 180°, and 360° (equirectangular or equi
 
 ## Running from source:
 
-- The project uses Godot 4.2. Make sure to get a compatble version. You can download a standalone binary on the [Godot Website](https://godotengine.org/download)
+- The project uses Godot 4.3. Make sure to get a compatble version. You can download a standalone binary on the [Godot Website](https://godotengine.org/download)
 
 - Next, get the [EIRTeam.FFmpeg](https://github.com/EIRTeam/EIRTeam.FFmpeg/releases) plugin, and unzip it into the project folder.
 
