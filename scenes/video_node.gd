@@ -27,7 +27,7 @@ var surfaces = []
 var _surface_id = -1
 var _is_stereo = false #: set = set_stereo
 
-var _plane_position = Vector3(0, 1.8, -10)
+var _plane_position = Vector3(0, 1.8, -500)
 
 @onready var player = $VideoViewport/VideoPlayer
 
@@ -90,11 +90,14 @@ func _adjust_plane_size():
 
 
 func recenter_view():
-	var _surface_transform = get_viewport().get_camera_3d().transform
+	var surface_transform = get_viewport().get_camera_3d().transform
+	var surface_rotation = surface_transform.basis.get_euler()
+	surface_rotation.z = 0
+	var _surface_basis = Basis.from_euler(surface_rotation).scaled(video_surface.scale)
 	for surface in surfaces:
-		surface.transform.basis = _surface_transform.basis.scaled(video_surface.scale)
-		surface.position = _surface_transform.origin
-	surfaces[SURFACES.PLANE].position += _surface_transform.basis * (_plane_position)
+		surface.transform.basis = _surface_basis
+		surface.position = surface_transform.origin
+	surfaces[SURFACES.PLANE].position += surface_transform.basis * (_plane_position)
 
 func _load_mpo(buffer):
 	# TODO
