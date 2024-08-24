@@ -94,6 +94,11 @@ func _process(_delta):
 	update_ui()
 
 func _on_LoadButton_pressed():
+	#$FileDialog.current_file = video_node.current_file
+	if video_node.current_file:
+		$FileDialog.current_file = video_node.current_file
+	print($FileDialog.current_file)
+	print(video_node.current_file)
 	$FileDialog.popup()
 
 

@@ -36,6 +36,7 @@ var _plane_position = Vector3(0, 1.8, -500)
 var _file_list
 var _current_dir
 var _current_file_idx
+var current_file # for file dialog
 
 var _volume_db: float = 0.0
 var volume_db: float:
@@ -164,7 +165,7 @@ func load_media_file(path):
 		_current_dir = path.get_base_dir()
 		_file_list = _get_file_list(_current_dir)
 		_current_file_idx = _file_list.find(path)
-
+	current_file = path.get_file()
 
 	mono_material.albedo_texture = texture
 	for m in stereo_materials:
