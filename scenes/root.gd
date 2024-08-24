@@ -263,6 +263,12 @@ func _unhandled_input(event):
 				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			toggle_menu()
+		
+		# this doesn't work for the file dialog...
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN && is_menu_open():
+			menu_view.scroll_down()	
+		elif event.button_index == MOUSE_BUTTON_WHEEL_UP && is_menu_open():
+			menu_view.scroll_up()
 
 
 	# mouse move

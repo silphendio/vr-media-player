@@ -244,6 +244,7 @@ mode = 3
 title = "Load Video..."
 initial_position = 1
 size = Vector2i(704, 704)
+exclusive = false
 ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
