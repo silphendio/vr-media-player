@@ -11,11 +11,11 @@ VR modes are flat screen, 180°, and 360° (equirectangular or equi-angular cube
 
 ## Running from source:
 
-- The project uses Godot 4.2. Make sure to get a compatble version. You can download a standalone binary on the [Godot Website](https://godotengine.org/download)
+- The project uses Godot 4.3. Make sure to get a compatble version. You can download a standalone binary on the [Godot Website](https://godotengine.org/download)
 
 - Next, get the [EIRTeam.FFmpeg](https://github.com/EIRTeam/EIRTeam.FFmpeg/releases) plugin, and unzip it into the project folder.
 
-- To be able to watch videos with uncommon codecs, download an appropriate version of [FFmpeg builds](https://github.com/BtbN/FFmpeg-Builds/releases) and copy all `.dll` or `.so` files into the `addons/ffmpeg/linux64/` or `addons/ffmpeg/win64/` folder. Overwrite existing files.
+- To be able to watch videos with uncommon codecs, download a file with the pattern `ffmpeg-n6...-shared` from [FFmpeg builds](https://github.com/BtbN/FFmpeg-Builds/releases) and copy all `.dll` or `.so` files into the `addons/ffmpeg/linux64/` or `addons/ffmpeg/win64/` folder. Overwrite existing files. Note that this doesn't seem to work with v1.1 of the plugin. v1.0.4 should work.
 
 - To run the application, start Godot, import the project and click `run`.
 
