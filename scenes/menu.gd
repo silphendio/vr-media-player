@@ -36,6 +36,8 @@ func set_playstate(p):
 
 func _ready():
 	video_node.playback_state_changed.connect(set_playstate)
+	for btn in $FileDialog.find_children("*", "OptionButton", true, false):
+		btn.fit_to_longest_item = false
 
 func update_progress_bar(pos: float, duration: float):
 	_progress = pos
