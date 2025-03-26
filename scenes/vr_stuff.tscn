@@ -5,34 +5,36 @@
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ibjnt"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0b4fk"]
+seamless = true
 noise = SubResource("FastNoiseLite_ibjnt")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jq6mu"]
 resource_local_to_scene = true
 shading_mode = 0
-albedo_color = Color(0, 0.0941176, 1, 1)
+albedo_color = Color(0.108333, 0.192618, 0.383008, 1)
 albedo_texture = SubResource("NoiseTexture2D_0b4fk")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_oem8w"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_jq6mu")
-top_radius = 0.005
-bottom_radius = 0.015
-height = 0.2
+top_radius = 0.004
+bottom_radius = 0.012
+height = 0.15
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rwdy3"]
+seamless = true
 noise = SubResource("FastNoiseLite_ibjnt")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tjxg4"]
 shading_mode = 0
-albedo_color = Color(1, 0.0941176, 1, 1)
+albedo_color = Color(0.269717, 0.104952, 0.246357, 1)
 albedo_texture = SubResource("NoiseTexture2D_rwdy3")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_5ahx1"]
 material = SubResource("StandardMaterial3D_tjxg4")
-top_radius = 0.005
-bottom_radius = 0.015
-height = 0.2
+top_radius = 0.004
+bottom_radius = 0.012
+height = 0.15
 
 [node name="VRStuff" type="Node3D"]
 script = ExtResource("1_q2fi5")

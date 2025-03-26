@@ -221,7 +221,7 @@ func add_volume_db(delta: float, indicator_parent = null):
 	video_node.volume_db += delta
 	if indicator_parent:
 		volume_indicator.volume_db = video_node.volume_db
-		volume_indicator.time_left = 100.0
+		volume_indicator.time_left = 4.0
 		if volume_indicator.is_inside_tree():
 			#volume_indicator.reparent(indicator_parent)
 			volume_indicator.get_parent().remove_child(volume_indicator)
