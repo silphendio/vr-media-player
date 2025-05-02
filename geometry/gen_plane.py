@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# this scrpt creates a .obj mesh of a plane suited for viewing videos in opengl
+# this script creates a .obj mesh of a plane suited for viewing videos in opengl
 
 import sys
 

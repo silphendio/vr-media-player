@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# this scrpt creates a .obj mesh of a half-sphere suited for viewing 180° videos in opengl
+# this script creates a .obj mesh of a half-sphere suited for viewing 180° videos in opengl
 
 import sys
 from math import sqrt, sin, cos, tau, pi

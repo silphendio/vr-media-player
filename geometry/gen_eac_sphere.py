@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# this scrpt creates a .obj mesh of a sphere suited for a equirectangular cubemap
+# this script creates a .obj mesh of a sphere suited for a equirectangular cubemap
 # like those used in youtube's 360° videos
 # uses opengl coordinates
 # visible from the inside (TODO: make this a command line argument)
