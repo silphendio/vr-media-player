@@ -19,7 +19,7 @@ VR modes are flat screen, 180°, and 360° (equirectangular or equi-angular cube
 
 - To run the application, start Godot, import the project and click `run`.
 
-To reate a standalone executable, follow this [Exporting projects](https://docs.godotengine.org/en/stable/tutorials/export/exporting_projects.html) Tutorial. 
+To create a standalone executable, follow this [Exporting projects](https://docs.godotengine.org/en/stable/tutorials/export/exporting_projects.html) Tutorial. 
 
 Binary distribution coming soon...
 

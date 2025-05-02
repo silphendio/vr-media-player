@@ -29,7 +29,7 @@ faces = []
 
 ## eac format:
 # top row: left, front, right
-# buttom row: bottom, back, up
+# bottom row: bottom, back, up
 
 lodp = lod+1
 
