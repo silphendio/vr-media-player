@@ -1,5 +1,5 @@
 # VR Media Player
-This is a simple video player / image viewer for virtual reality bult with [Godot](https://godotengine.org/).
+This is a simple video player / image viewer for virtual reality built with [Godot](https://godotengine.org/).
 
 When no VR device is detected, it still works in "desktop-mode"
 
@@ -11,7 +11,7 @@ VR modes are flat screen, 180°, and 360° (equirectangular or equi-angular cube
 
 ## Running from source:
 
-- The project uses Godot 4.3. Make sure to get a compatble version. You can download a standalone binary on the [Godot Website](https://godotengine.org/download)
+- The project uses Godot 4.3. Make sure to get a compatible version. You can download a standalone binary on the [Godot Website](https://godotengine.org/download)
 
 - Next, get the [EIRTeam.FFmpeg](https://github.com/EIRTeam/EIRTeam.FFmpeg/releases) plugin, and unzip it into the project folder.
 
@@ -19,7 +19,7 @@ VR modes are flat screen, 180°, and 360° (equirectangular or equi-angular cube
 
 - To run the application, start Godot, import the project and click `run`.
 
-To reate a standalone executable, follow this [Exporting projects](https://docs.godotengine.org/en/stable/tutorials/export/exporting_projects.html) Tutorial. 
+To create a standalone executable, follow this [Exporting projects](https://docs.godotengine.org/en/stable/tutorials/export/exporting_projects.html) Tutorial. 
 
 Binary distribution coming soon...
 
